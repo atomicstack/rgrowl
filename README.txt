@@ -9,7 +9,8 @@ Host *
 5. scp $PATH/rgrowl $host:bin/
 6. ssh box
 7. box:~$ sleep 5 && rgrowl hello world
-8. works really well with ProxyCommand and ControlMaster:
+
+works really well with ProxyCommand and ControlMaster:
 
 http://benno.id.au/blog/2006/06/08/ssh_proxy_command
 http://www.anchor.com.au/blog/2010/02/ssh-controlmaster-the-good-the-bad-the-ugly/
