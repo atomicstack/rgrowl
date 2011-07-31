@@ -1,0 +1,5 @@
+#!/bin/bash
+
+hostname=$(hostname -s)
+
+echo -e "$hostname\0$*" | nc -w 1 localhost 12340
