@@ -3,14 +3,23 @@
 use strict;
 use warnings;
 use IO::Pipe;
+use POSIX qw/strftime/;
 
 sleep 1 while eval { loop() };
 
 sub loop {
+
     print "listening for remote growl clients...\n";
     my $nc = IO::Pipe->new->reader(qw/ nc -vkl 12340 /);
+
     while ( my $line = $nc->getline ) {
-        my ($title, $message) = split /\0/, $line;
-        system growlnotify => '-t', $title, '-m', $message;
+
+        chomp(
+          my ($host, $message) = split /\0/, $line
+        );
+
+        system growlnotify => '-t', $host, '-m', $message;
+
+        printf "[%s] $host -> $message\n", strftime('%F %T', localtime);
     }
 }
