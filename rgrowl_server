@@ -19,7 +19,18 @@ sub loop {
           my ($host, $message) = split /\0/, $line
         );
 
-        system growlnotify => '-t', $host, '-m', $message;
+        if ( $message =~ /^prowl:/ ) {
+            $message =~ s/^prowl://;
+            system prowl => (
+                -t => $host,
+                -m => $message,
+            );
+        }
+
+        system growlnotify => (
+            -t => $host,
+            -m => $message,
+        );
 
         printf "[%s] $host -> $message\n", strftime('%F %T', localtime);
     }
