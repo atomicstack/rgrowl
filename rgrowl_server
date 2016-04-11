@@ -10,6 +10,7 @@ sleep 1 while eval { loop() };
 sub loop {
 
     print "listening for remote growl clients...\n";
+    die "$!" unless
     my $nc = IO::Pipe->new->reader(qw/ nc -vkl 12340 /);
 
     while ( my $line = $nc->getline ) {
